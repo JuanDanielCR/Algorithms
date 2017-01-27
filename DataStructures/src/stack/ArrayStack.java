@@ -25,7 +25,7 @@ public class ArrayStack<Item> implements Iterable<Item>{
 	//pop
 	public Item pop(){
 		Item item = items[--n];
-		items[n] = null;
+		items[n] = null; //loitering
 		if(n > 0 && n<items.length/4)
 			resize(items.length/2);
 		return item;
