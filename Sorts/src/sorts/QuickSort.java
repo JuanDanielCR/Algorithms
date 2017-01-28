@@ -1,0 +1,45 @@
+package sorts;
+
+public class QuickSort {
+	public void sort(Comparable []a){
+		ShuffleSort.Shuffle(a);
+		sort(a,0,a.length-1);
+	}
+	private void sort(Comparable[]a, int lo, int hi){
+	//break recursion statement
+		if(lo >= hi) return;
+	//found mid like in binary and merge, but using partition
+		int mid = partition(a,lo,hi);
+	//Apply recursion
+		sort(a,lo,mid-1);
+		sort(a,mid+1,hi);
+	}
+	private int partition(Comparable[]a, int lo, int hi){
+	//put pointers i,j in position
+		int i = lo;
+		int j = hi;
+		while(true){
+		//increment i until a[i]>a[lo]
+			while(less(a[++i],a[lo]))
+				if(i==hi)break; //stop at border hi
+		//decrement j until a[j]<a[lo]
+			while(less(a[lo],a[--j]))
+				if(j==lo)break;
+		//loops will make a[i] > a[lo] and a[j]<a[lo] so, swap them, unless i and j are crossed
+			if(i >= j) break;
+			exch(a,i,j);
+		}
+		//exchange j with lo
+		exch(a,lo,j);
+		//return j, which divides the array in new subarrays
+		return j;
+	}
+	public boolean less(Comparable a, Comparable b){
+		return a.compareTo(b) < 0;
+	}
+	public void exch(Comparable[]a,int i, int j){
+		Comparable aux = a[i];
+		a[i] = a[j];
+		a[j] = aux;
+	}
+}

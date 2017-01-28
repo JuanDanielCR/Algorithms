@@ -1,4 +1,4 @@
-package source;
+package sorts;
 
 public class BinarySearch {
 	//Searchs from data[low] to data[high]
