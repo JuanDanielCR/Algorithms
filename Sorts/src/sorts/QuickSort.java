@@ -1,5 +1,7 @@
 package sorts;
 
+import java.util.Random;
+
 public class QuickSort {
 	public void sort(Comparable []a){
 		ShuffleSort.Shuffle(a);
@@ -7,7 +9,7 @@ public class QuickSort {
 	}
 	private void sort(Comparable[]a, int lo, int hi){
 	//break recursion statement
-		if(lo >= hi) return;
+		if(hi <= lo) return;
 	//found mid like in binary and merge, but using partition
 		int mid = partition(a,lo,hi);
 	//Apply recursion
@@ -17,7 +19,7 @@ public class QuickSort {
 	private int partition(Comparable[]a, int lo, int hi){
 	//put pointers i,j in position
 		int i = lo;
-		int j = hi;
+		int j = hi+1;
 		while(true){
 		//increment i until a[i]>a[lo]
 			while(less(a[++i],a[lo]))
@@ -42,4 +44,20 @@ public class QuickSort {
 		a[i] = a[j];
 		a[j] = aux;
 	}
+	
+	//Test
+		public static void main(String [] args){
+			Random rdn =  new Random();
+			int n = 300000000; //300 millions, 3 times merge sort capacity  
+			Integer [] array = new Integer[n];
+			for(int i = 0; i<n;i++){
+				array[i] = rdn.nextInt(100);
+			}
+			System.out.println("filled");
+			
+			QuickSort quick =  new QuickSort();
+			quick.sort(array);
+			
+			System.out.println("Sorted");
+		}
 }
