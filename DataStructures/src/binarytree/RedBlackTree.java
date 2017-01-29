@@ -11,6 +11,12 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
 		public Value value;
 		public Node left, right;
 		public boolean color;
+		
+		public Node(Key key, Value value,boolean color){
+			this.key = key;
+			this.value = value;
+			this.color = color;
+		}
 	}
 //Is parent red?	
 	private boolean isRed(Node x){
@@ -35,6 +41,47 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
 		h.right = x.left;
 		x.color =  h.color;
 		h.color = RED;
+		return x;
+	}
+	private Node rotateRight(Node h){
+		assert(isRed(h.left));
+		Node x = h.left;
+		h.left = x.right;
+		x.right = h;
+		x.color = RED;
+		return x;
+	}
+	private void flipColors(Node h){
+		assert(!isRed(h));
+		assert(isRed(h.left));
+		assert(isRed(h.right));
+		h.left.color = BLACK;
+		h.right.color = BLACK;
+		h.color = RED;
+	}
+	/**
+	 *Insert:
+	 *Use basic operations for equivalence with 2-3 tree
+	 *(1) Each time we insert a node, we create it as before and make it RED
+	 *(2) A node can't have two red links associated 
+	 **/
+	public void put(Key key, Value value){
+		root = put(root,key,value);
+	}
+	private Node put(Node x, Key key, Value value){
+		if(x == null) return new Node(key,value,RED);
+		int cmp = key.compareTo(x.key);
+		if(cmp < 0) x.left = put(x.left,key,value);
+		else if(cmp > 0) x.right = put(x.right,key,value);
+		else x.value = value;
+	//Rules:
+		//right child is red instead of left child
+		if(isRed(x.right) && !isRed(x.left)) x = rotateLeft(x);
+		//left child and left grandchild are red
+		if(isRed(x.left) && isRed(x.left.left)) x = rotateRight(x);
+		//two child red
+		if(isRed(x.left) && isRed(x.right)) flipColors(x);
+		
 		return x;
 	}
 }
