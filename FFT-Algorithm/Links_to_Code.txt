@@ -1,0 +1,2 @@
+C library for FFT Algorithm: http://www.fftw.org/
+C library design: http://www.fftw.org/fftw-paper-ieee.pdf
